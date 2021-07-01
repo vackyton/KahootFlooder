@@ -12,16 +12,16 @@ PATH = "venv/chromedriver"
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/" \
              "537.36 (KHTML, like Gecko) Chrome/" \
              "87.0.4280.88 Safari/537.36"
-tab = 0
+tab_number = 0
 
 print("Welcome to Kahoot Flooder by xTobyPlayZ - Copyright (c) 2021")
 
 # Getting the required user input
-pin = int(input("Game Pin: "))
-bot_name = input("Bot Name: ")
-bot_amount = int(input("Bot Amount: "))
+pin_input = int(input("Game Pin: "))
+bot_name_input = input("Bot Name: ")
+bot_amount_input = int(input("Bot Amount: "))
 
-print(f"Sending {bot_amount} bots...")
+print(f"Sending {bot_amount_input} bots...")
 
 # Declaring the options
 options = webdriver.ChromeOptions()
@@ -39,8 +39,9 @@ options.add_argument("--disable-dev-shm-usage")
 options.add_argument("--no-sandbox")
 driver = webdriver.Chrome(executable_path=PATH, options=options)
 
+
 # Main loop that runs the amount of times the user specifies
-for i in range(bot_amount):
+def create_bot(tab, pin, bot_name):
     if tab != 0:
         driver.execute_script("window.open('');")
         driver.switch_to.window(driver.window_handles[tab])
@@ -65,7 +66,11 @@ for i in range(bot_amount):
         sleep(6)
         print("Continuing...")
     driver.delete_all_cookies()
-    tab += 1
+
+
+for i in range(bot_amount_input):
+    create_bot(tab_number, pin_input, bot_name_input)
+    tab_number += 1
 
 # Once the bots have been delivered, let the user wait until they want to
 # delete them.
