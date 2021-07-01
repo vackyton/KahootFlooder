@@ -8,6 +8,7 @@ A simple Kahoot Flooder that actually works!
 * Selenium
 
 ## Installation
+* Download or clone the repository
 * Install Selenium with the following command:
 ```bash
 pip install selenium
