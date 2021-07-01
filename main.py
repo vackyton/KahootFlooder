@@ -1,3 +1,5 @@
+"""A simple Kahoot Flooder made in Python with Selenium."""
+
 # Initial imports
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -6,6 +8,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.common.exceptions import TimeoutException
 from time import sleep
+from names import FIRST, LAST
+from random import choice
 
 # Declaring the path and user agent along with a tab counter
 PATH = "venv/chromedriver"
@@ -18,7 +22,21 @@ print("Welcome to Kahoot Flooder by xTobyPlayZ - Copyright (c) 2021")
 
 # Getting the required user input
 pin_input = int(input("Game Pin: "))
-bot_name_input = input("Bot Name: ")
+print("1) Custom names")
+print("2) Random names")
+name_choice = ""
+bot_name_input = ""
+random_names = False
+while name_choice == "":
+    name_choice = input("Choose an option: ")
+    if name_choice == str(1):
+        bot_name_input = input("Bot Name: ")
+    elif name_choice == str(2):
+        print("Using random names...")
+        random_names = True
+    else:
+        print("That is not an option!")
+        name_choice = ""
 bot_amount_input = int(input("Bot Amount: "))
 
 print(f"Sending {bot_amount_input} bots...")
@@ -42,6 +60,16 @@ driver = webdriver.Chrome(executable_path=PATH, options=options)
 
 # Main loop that runs the amount of times the user specifies
 def create_bot(tab, pin, bot_name):
+    """
+    Create a bot.
+
+    Uses the pin and name to create as many bots as the user wants.
+
+    :param tab: Keeps track of which tab the browser is on.
+    :param pin: The pin for the Kahoot.
+    :param bot_name: The name for each bot to be created.
+    :return: None
+    """
     if tab != 0:
         driver.execute_script("window.open('');")
         driver.switch_to.window(driver.window_handles[tab])
@@ -69,6 +97,8 @@ def create_bot(tab, pin, bot_name):
 
 
 for i in range(bot_amount_input):
+    if random_names:
+        bot_name_input = choice(FIRST) + choice(LAST)
     create_bot(tab_number, pin_input, bot_name_input)
     tab_number += 1
 
@@ -82,5 +112,6 @@ while end == "":
         driver.quit()
         print("Bots have been deleted (may take a moment to update on screen)")
     else:
+        print("That is not an option!")
         end = ""
 print("Thank you for using Kahoot Flooder!")
