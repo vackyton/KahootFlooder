@@ -10,9 +10,16 @@ from selenium.common.exceptions import TimeoutException
 from time import sleep
 from names import FIRST, LAST
 from random import choice
+from sys import platform
 
 # Declaring the path and user agent along with a tab counter
-PATH = "../KahootFlooder/chromedriver"
+PATH = ""
+if platform == "linux":
+    PATH = "chromedriver/chromedriverlinux"
+elif platform == "darwin":
+    PATH = "chromedriver/chromedrivermac"
+elif platform == "win32":
+    PATH = "chromedriver/chromedriverwindows.exe"
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/" \
              "537.36 (KHTML, like Gecko) Chrome/" \
              "87.0.4280.88 Safari/537.36"
